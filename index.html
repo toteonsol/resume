@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name - Resume</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
+        
+        :root {
+            --primary: #2563eb;
+            --text: #1f2937;
+            --light: #f8fafc;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: #f1f5f9;
+            padding: 20px;
+            opacity: 0;
+            animation: pageLoad 0.8s forwards;
+        }
+        
+        @keyframes pageLoad {
+            to { opacity: 1; }
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), #3b82f6);
+            color: white;
+            padding: 80px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.6s;
+        }
+        
+        header:hover::before {
+            opacity: 1;
+        }
+        
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem;
+            margin-bottom: 10px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: headerText 1s 0.3s forwards;
+        }
+        
+        header p {
+            font-size: 1.35rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: headerText 1s 0.6s forwards;
+        }
+        
+        @keyframes headerText {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .contact {
+            margin-top: 20px;
+            font-size: 1.05rem;
+        }
+        
+        .contact a {
+            color: white;
+            text-decoration: none;
+            margin: 0 12px;
+            transition: all 0.3s;
+        }
+        
+        .contact a:hover {
+            text-decoration: underline;
+            transform: scale(1.05);
+        }
+        
+        main {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            padding: 50px 40px;
+        }
+        
+        .sidebar, .main-content section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .sidebar.visible, .main-content section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .sidebar {
+            background: #f8fafc;
+            padding: 35px;
+            border-radius: 12px;
+        }
+        
+        h2 {
+            font-size: 1.55rem;
+            color: var(--primary);
+            margin-bottom: 22px;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        
+        /* Skill bars with fill animation */
+        .skill-item {
+            margin-bottom: 22px;
+        }
+        
+        .skill-bar {
+            background: #e2e8f0;
+            height: 9px;
+            border-radius: 999px;
+            margin-top: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), #60a5fa);
+            border-radius: 999px;
+            width: 0;
+            transition: width 1.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        /* Experience & Project cards */
+        .experience-item, .project-item {
+            background: white;
+            padding: 22px;
+            border-radius: 10px;
+            margin-bottom: 28px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .experience-item.visible, .project-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .experience-item:hover, .project-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 25px rgba(37, 99, 235, 0.15);
+        }
+        
+        .date {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+        
+        .download-btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+        }
+        
+        .download-btn:hover {
+            background: #1e40af;
+            transform: translateY(-5px) scale(1.08);
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.4);
+        }
+        
+        /* Staggered animation delays */
+        .main-content section:nth-child(1) { transition-delay: 0.1s; }
+        .main-content section:nth-child(2) { transition-delay: 0.3s; }
+        
+        @media (max-width: 768px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+            header h1 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; }
+            .download-btn { display: none; }
+            .experience-item, .project-item { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>Your Full Name</h1>
+            <p>Professional Title • e.g. Software Engineer | Full-Stack Developer</p>
+            <div class="contact">
+                <a href="mailto:your.email@example.com">your.email@example.com</a> • 
+                <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a> • 
+                <a href="https://github.com/yourusername" target="_blank">GitHub</a> • 
+                <span>+63 912 345 6789</span>
+            </div>
+        </header>
+
+        <main>
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <section>
+                    <h2>About Me</h2>
+                    <p>Passionate and results-driven professional with several years of experience in web development. I love building clean, performant applications that solve real problems.</p>
+                </section>
+
+                <section>
+                    <h2>Skills</h2>
+                    <div class="skill-item">
+                        <strong>HTML / CSS / JavaScript</strong>
+                        <div class="skill-bar"><div class="skill-progress" data-width="95"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <strong>React / Next.js</strong>
+                        <div class="skill-bar"><div class="skill-progress" data-width="88"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <strong>Node.js / Python</strong>
+                        <div class="skill-bar"><div class="skill-progress" data-width="80"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <strong>UI/UX & Tailwind</strong>
+                        <div class="skill-bar"><div class="skill-progress" data-width="75"></div></div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Education</h2>
+                    <p><strong>Bachelor of Science in Computer Science</strong><br>
+                    University of the Philippines • 20XX – 20XX</p>
+                </section>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <section>
+                    <h2>Work Experience</h2>
+                    
+                    <div class="experience-item">
+                        <h3>Senior Web Developer — Awesome Company</h3>
+                        <p class="date">January 2024 – Present</p>
+                        <ul>
+                            <li>Led frontend development of a SaaS platform used by 10k+ users</li>
+                            <li>Improved page load speed by 45% through optimization techniques</li>
+                            <li>Mentored junior developers and established code review standards</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-item">
+                        <h3>Web Developer — Previous Startup</h3>
+                        <p class="date">June 2022 – December 2023</p>
+                        <ul>
+                            <li>Built and maintained responsive websites for multiple clients</li>
+                            <li>Implemented interactive features that increased user engagement by 30%</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Projects</h2>
+                    <div class="project-item">
+                        <h3>Personal Portfolio & Resume Site</h3>
+                        <p><strong>Tech:</strong> HTML, CSS, JavaScript • Fully responsive with scroll animations</p>
+                        <p>A clean, interactive single-page resume that highlights modern web development skills.</p>
+                    </div>
+
+                    <!-- Add more projects here -->
+                </section>
+            </div>
+        </main>
+
+        <div style="text-align: center; padding: 40px; background: #f8fafc;">
+            <a href="#" onclick="window.print()" class="download-btn">Download as PDF</a>
+        </div>
+    </div>
+
+    <script>
+        // Intersection Observer for scroll animations
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.sidebar, .main-content section, .experience-item, .project-item');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // Stagger the appearance slightly
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                            
+                            // Animate skill bars when they appear
+                            if (entry.target.querySelector('.skill-progress')) {
+                                const bars = entry.target.querySelectorAll('.skill-progress');
+                                bars.forEach(bar => {
+                                    const width = bar.getAttribute('data-width') || 80;
+                                    bar.style.width = width + '%';
+                                });
+                            }
+                        }, index * 120); // nice stagger effect
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            });
+            
+            elements.forEach(el => observer.observe(el));
+        }
+        
+        // Initialize everything
+        window.addEventListener('load', () => {
+            animateOnScroll();
+            
+            // Optional: Console message
+            console.log("%c✨ Resume website with smooth animations loaded successfully!", 
+                        "color: #2563eb; font-size: 15px; font-weight: 500;");
+        });
+        
+        // Keyboard shortcut hint (fun touch)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "p" && (e.ctrlKey || e.metaKey)) {
+                console.log("%c💡 Tip: Use the Download PDF button for best results!", "color: #64748b");
+            }
+        });
+    </script>
+</body>
+</html>
